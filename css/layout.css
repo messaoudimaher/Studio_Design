@@ -1,0 +1,332 @@
+/* ============================================
+   MODERN LAYOUT SYSTEM
+   Full-width content with sticky header
+   ============================================ */
+
+/* === MAIN LAYOUT STRUCTURE === */
+
+#colorlib-page {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  /* Add top padding for fixed header */
+  padding-top: var(--nav-height-mobile);
+}
+
+@media (min-width: 768px) {
+  #colorlib-page {
+    padding-top: var(--nav-height);
+  }
+}
+
+#colorlib-main {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-bg-primary);
+}
+
+/* === HERO SECTION === */
+/* Full-width hero with modern aesthetic */
+
+#colorlib-hero {
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Adjust flexslider for full-width */
+#colorlib-hero .flexslider {
+  height: 100%;
+  border: none;
+  margin: 0;
+  background: transparent;
+}
+
+#colorlib-hero .flexslider .slides {
+  height: 100%;
+}
+
+#colorlib-hero .flexslider .slides > li {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Modern overlay - subtle gradient */
+#colorlib-hero .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(43, 43, 43, 0.6) 0%,
+    rgba(43, 43, 43, 0.3) 50%,
+    rgba(201, 168, 106, 0.2) 100%
+  );
+  z-index: 1;
+}
+
+/* Hero content positioning */
+#colorlib-hero .slider-text {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#colorlib-hero .slider-text-inner {
+  max-width: 800px;
+  padding: var(--space-6);
+}
+
+/* Hero typography */
+#colorlib-hero .slider-text-inner h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-light);
+  color: var(--color-white);
+  margin-bottom: var(--space-6);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+@media (min-width: 768px) {
+  #colorlib-hero .slider-text-inner h1 {
+    font-size: var(--text-5xl);
+  }
+}
+
+#colorlib-hero .slider-text-inner h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
+  line-height: var(--leading-relaxed);
+}
+
+@media (min-width: 768px) {
+  #colorlib-hero .slider-text-inner h2 {
+    font-size: var(--text-lg);
+  }
+}
+
+/* Modern flexslider navigation */
+.flexslider .flex-direction-nav a {
+  width: 50px;
+  height: 50px;
+  background: rgba(250, 248, 245, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  text-indent: 0;
+  font-size: 0;
+}
+
+.flexslider .flex-direction-nav a:before {
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: var(--color-white);
+}
+
+.flexslider .flex-direction-nav a.flex-prev:before {
+  content: "←";
+}
+
+.flexslider .flex-direction-nav a.flex-next:before {
+  content: "→";
+}
+
+.flexslider .flex-direction-nav a:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  transform: scale(1.1);
+}
+
+/* Hide default flexslider controls */
+.flexslider .flex-control-nav {
+  display: none;
+}
+
+/* === SECTION LAYOUTS === */
+
+/* Standard section */
+.colorlib-narrow-content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* Section spacing */
+.colorlib-about,
+.colorlib-services,
+.colorlib-work,
+.colorlib-blog,
+.colorlib-contact {
+  padding-top: var(--section-padding-mobile);
+  padding-bottom: var(--section-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .colorlib-about,
+  .colorlib-services,
+  .colorlib-work,
+  .colorlib-blog,
+  .colorlib-contact {
+    padding-top: var(--section-padding-desktop);
+    padding-bottom: var(--section-padding-desktop);
+  }
+}
+
+/* === COUNTERS SECTION === */
+
+#colorlib-counter {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: var(--space-20) 0;
+}
+
+#colorlib-counter .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(43, 43, 43, 0.85);
+}
+
+#colorlib-counter .colorlib-narrow-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* === GET IN TOUCH SECTION === */
+
+#get-in-touch {
+  background-color: var(--color-bg-secondary);
+  padding: var(--space-16) 0;
+}
+
+@media (min-width: 768px) {
+  #get-in-touch {
+    padding: var(--space-24) 0;
+  }
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+
+/* Remove old sidebar styles that may conflict */
+.js-fullheight {
+  height: 100vh !important;
+}
+
+@media (max-width: 768px) {
+  .js-fullheight {
+    height: auto !important;
+    min-height: 500px;
+  }
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 768px) {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .row > [class*="col-"] {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+/* === ANIMATION ADJUSTMENTS === */
+
+/* Keep animate-box but make subtle */
+.animate-box {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), 
+              transform var(--transition-slow);
+}
+
+.animate-box.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Specific animation effects - refined */
+.fadeIn.animated {
+  animation: subtleFadeIn var(--transition-slow) ease-out;
+}
+
+.fadeInLeft.animated {
+  animation: subtleFadeInLeft var(--transition-slow) ease-out;
+}
+
+.fadeInRight.animated {
+  animation: subtleFadeInRight var(--transition-slow) ease-out;
+}
+
+.fadeInUp.animated {
+  animation: subtleFadeInUp var(--transition-slow) ease-out;
+}
+
+@keyframes subtleFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes subtleFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subtleFadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subtleFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

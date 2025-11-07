@@ -1,0 +1,295 @@
+/* ============================================
+   MODERN STICKY NAVIGATION
+   Mobile-first, accessible, performant
+   ============================================ */
+
+/* === HEADER STRUCTURE === */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.1);
+  transition: all var(--transition-base);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Hide header on scroll down, show on scroll up */
+.site-header.hidden {
+  transform: translateY(-100%);
+}
+
+/* Add shadow when scrolled */
+.site-header.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Container */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: 70px;
+}
+
+@media (min-width: 768px) {
+  .header-container {
+    height: 75px;
+    padding: 0 var(--space-10);
+  }
+}
+
+/* === LOGO === */
+
+.logo {
+  display: flex;
+  align-items: center;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+
+.logo a {
+  display: block;
+  line-height: 0;
+}
+
+.logo img {
+  height: 35px;
+  width: auto;
+  object-fit: contain;
+  transition: all var(--transition-base);
+}
+
+@media (min-width: 768px) {
+  .logo img {
+    height: 40px;
+  }
+}
+
+.logo a:hover img {
+  opacity: 0.8;
+  transform: scale(1.02);
+}
+
+
+/* === NAVIGATION MENU === */
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  background: linear-gradient(135deg, var(--color-deep-charcoal) 0%, #1a1a1a 100%);
+  padding: 100px var(--space-8) var(--space-8);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile menu open state */
+.main-nav.active {
+  transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+  .main-nav {
+    position: static;
+    width: auto;
+    background: transparent;
+    padding: 0;
+    transform: translateX(0);
+    overflow-y: visible;
+    box-shadow: none;
+  }
+}
+
+/* Navigation list */
+.main-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .main-nav ul {
+    flex-direction: row;
+    gap: var(--space-10);
+    align-items: center;
+  }
+}
+
+.main-nav li {
+  margin: 0;
+}
+
+/* Navigation links */
+.main-nav a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.5px;
+  position: relative;
+  padding: var(--space-4) 0;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .main-nav a {
+    color: var(--color-deep-charcoal);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) 0;
+  }
+}
+
+/* Hover effect - elegant underline */
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-gold);
+  transition: width var(--transition-base);
+}
+
+.main-nav a:hover {
+  color: var(--color-gold);
+  padding-left: var(--space-3);
+}
+
+@media (min-width: 1024px) {
+  .main-nav a:hover {
+    padding-left: 0;
+  }
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+/* Active link state */
+.main-nav a.active {
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.main-nav a.active::after {
+  width: 100%;
+}
+
+/* === MOBILE MENU TOGGLE === */
+
+.mobile-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}
+
+/* Hamburger lines */
+.mobile-menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-deep-charcoal);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  border-radius: 2px;
+}
+
+/* Animated hamburger to X */
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* === OVERLAY FOR MOBILE MENU === */
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 998;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (min-width: 1024px) {
+  .menu-overlay {
+    display: none;
+  }
+}
+
+/* Add margin to body for fixed header */
+body {
+  padding-top: 70px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 75px;
+  }
+}
+
+/* === PREVENT BODY SCROLL WHEN MOBILE MENU OPEN === */
+
+body.menu-open {
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  body.menu-open {
+    overflow: auto;
+  }
+}
