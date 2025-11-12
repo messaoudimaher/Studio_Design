@@ -1,80 +1,29 @@
-═══════════════════════════════════════════════════════════
-  🎉 MJ STUDIO DESIGN - YOUR WEBSITE IS READY TO PREVIEW!
-═══════════════════════════════════════════════════════════
+=====================================
+  MJ. STUDIO DESIGN - QUICK START
+=====================================
 
-📍 TO VIEW YOUR WEBSITE:
--------------------------
+1. OPEN TERMINAL/COMMAND PROMPT
 
-   1. Go to: C:\Users\pc\Downloads\balay-master\Studio_Design\
-   
-   2. DOUBLE-CLICK on "index.html"
-   
-   3. Your website opens in your browser! 🚀
+2. NAVIGATE TO PROJECT:
+   cd "C:\Users\pc\Downloads\balay-master\Studio_Design"
 
-═══════════════════════════════════════════════════════════
+3. START LOCAL SERVER:
+   python -m http.server 8000
 
-✅ WHAT'S UPDATED:
-------------------
+4. OPEN BROWSER:
+   Go to: http://localhost:8000/
 
-✓ Your Logo integrated (Logo.jpg)
-✓ All contact info (Bizerte, Tunisie)
-✓ Phone: +216 27 698 989
-✓ Email: contact.jmstudiodesign@gmail.com
-✓ 5 Social media links working:
-  - Facebook
-  - Instagram  
-  - TikTok
-  - WhatsApp (Get Started button)
-  - Linktree
+5. VIEW PAGES:
+   - Homepage: http://localhost:8000/
+   - About: http://localhost:8000/about.html
+   - Services: http://localhost:8000/services.html
+   - Portfolio: http://localhost:8000/work.html
+   - Contact: http://localhost:8000/contact.html
 
-✓ Blog section REMOVED (as requested)
-✓ Brand messaging "La Signature du Raffinement"
-✓ Modern sticky navigation
-✓ Mobile responsive design
-✓ Elegant animations
+6. STOP SERVER:
+   Press Ctrl + C in terminal
 
-═══════════════════════════════════════════════════════════
-
-📱 TEST MOBILE VIEW:
---------------------
-
-   1. Open the website
-   2. Press F12 (or Right-click → Inspect)
-   3. Click the mobile icon (📱)
-   4. Try the hamburger menu!
-
-═══════════════════════════════════════════════════════════
-
-🎯 NEXT STEPS:
---------------
-
-After you preview:
-
-1. Tell me what you think!
-2. I'll build the portfolio grid with your real projects
-3. We'll optimize your BMP images (they're too big!)
-4. Update the other pages
-
-═══════════════════════════════════════════════════════════
-
-📂 YOUR PROJECTS (Ready to integrate):
----------------------------------------
-
-Based on your "Mona.J _Studio Design" folder:
-
-✓ Salon 1 - Living Room (~20 images)
-✓ Séjour - Living Area (8 images)  
-✓ Salon, salle a manger et entrée - Dining (13 images)
-✓ Chambre parents - Master Bedroom (5 images)
-✓ Chambre parents 2 - Bedroom (7 images)
-✓ Salle d'eau - Bathroom (3 images)
-
-Total: ~56 images to showcase!
-
-═══════════════════════════════════════════════════════════
-
-Need help? Just ask! 
-Ready to see it? OPEN index.html NOW! 🎨
-
-═══════════════════════════════════════════════════════════
+=====================================
+Need help? Check HOW_TO_PREVIEW.md
+=====================================
 

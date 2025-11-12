@@ -1,32 +1,17 @@
 /* ============================================
    MJ STUDIO DESIGN - DESIGN SYSTEM
-   Modern Design Tokens & Variables
+   Modern Design Tokens & Variables with Dark Mode
    ============================================ */
 
 :root {
-  /* === COLOR PALETTE === */
+  /* === THEME COLORS === */
   
-  /* Primary Colors */
+  /* Base Color Palette (theme-independent) */
   --color-gold: #C9A86A;
   --color-gold-light: #E5D5B7;
   --color-gold-dark: #A08553;
   
-  --color-charcoal: #2B2B2B;
-  --color-charcoal-light: #3D3D3D;
-  
-  --color-white: #FFFFFF;
-  --color-warm-white: #FAF8F5;
-  --color-cream: #EDE8E1;
-  
-  /* Neutral Scale */
-  --color-stone-100: #F5F3F0;
-  --color-stone-200: #E8E5E0;
-  --color-stone-300: #D1CCC4;
-  --color-stone-400: #9B9B9B;
-  --color-stone-500: #6B6B6B;
-  --color-stone-600: #4A4A4A;
-  
-  /* Semantic Colors */
+  /* === LIGHT MODE (DEFAULT) === */
   --color-text-primary: #2B2B2B;
   --color-text-secondary: #6B6B6B;
   --color-text-muted: #9B9B9B;
@@ -34,10 +19,81 @@
   
   --color-bg-primary: #FAF8F5;
   --color-bg-secondary: #EDE8E1;
-  --color-bg-dark: #2B2B2B;
+  --color-bg-tertiary: #FFFFFF;
+  --color-bg-elevated: #FFFFFF;
   
-  --color-border-light: #E8E5E0;
-  --color-border-medium: #D1CCC4;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F5F3F0;
+  
+  --color-border-light: rgba(43, 43, 43, 0.08);
+  --color-border-medium: rgba(43, 43, 43, 0.12);
+  --color-border-strong: rgba(43, 43, 43, 0.16);
+  
+  --color-shadow-sm: rgba(0, 0, 0, 0.05);
+  --color-shadow-md: rgba(0, 0, 0, 0.1);
+  --color-shadow-lg: rgba(0, 0, 0, 0.15);
+  
+  /* Static colors for reference */
+  --color-charcoal: #2B2B2B;
+  --color-white: #FFFFFF;
+  --color-warm-white: #FAF8F5;
+  --color-cream: #EDE8E1;
+  --color-stone-gray: #9B9B9B;
+  --color-deep-charcoal: #2B2B2B;
+  --color-light-gold: #E5D5B7;
+}
+
+/* === DARK MODE === */
+[data-theme="dark"] {
+  --color-text-primary: #F5F3F0;
+  --color-text-secondary: #D1CCC4;
+  --color-text-muted: #9B9B9B;
+  --color-text-inverse: #1A1A1A;
+  
+  --color-bg-primary: #1A1A1A;
+  --color-bg-secondary: #252525;
+  --color-bg-tertiary: #2B2B2B;
+  --color-bg-elevated: #303030;
+  
+  --color-surface: #252525;
+  --color-surface-hover: #2F2F2F;
+  
+  --color-border-light: rgba(255, 255, 255, 0.08);
+  --color-border-medium: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  
+  --color-shadow-sm: rgba(0, 0, 0, 0.3);
+  --color-shadow-md: rgba(0, 0, 0, 0.4);
+  --color-shadow-lg: rgba(0, 0, 0, 0.5);
+  
+  /* Keep gold consistent but slightly adjusted for dark mode */
+  --color-gold: #D4B67A;
+  --color-gold-light: #E5D5B7;
+  --color-gold-dark: #B39858;
+}
+
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Disable transitions on theme change to avoid flash */
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: none !important;
+}
+
+:root {
+  /* Neutral Scale (kept for reference) */
+  --color-stone-100: #F5F3F0;
+  --color-stone-200: #E8E5E0;
+  --color-stone-300: #D1CCC4;
+  --color-stone-400: #9B9B9B;
+  --color-stone-500: #6B6B6B;
+  --color-stone-600: #4A4A4A;
   
   /* === TYPOGRAPHY === */
   

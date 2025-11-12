@@ -29,56 +29,51 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.innerHTML = '<span>Envoi en cours...</span>';
             submitButton.disabled = true;
 
-            // Simulate form submission (replace with actual API call)
-            setTimeout(function() {
-                // Hide form and show success message
-                contactForm.style.display = 'none';
-                formSuccess.style.display = 'block';
+            // Prepare email parameters
+            const templateParams = {
+                to_email: 'maher.messeoudi@gmail.com',
+                from_name: data.firstName + ' ' + data.lastName,
+                from_email: data.email,
+                phone: data.phone,
+                project_type: data.projectType,
+                localisation: data.localisation,
+                message: data.message,
+                reply_to: data.email
+            };
 
-                // Scroll to success message
-                formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Send email using EmailJS
+            emailjs.send('service_c23lwqj', 'template_ubru3ju', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Hide form and show success message
+                    contactForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
 
-                // Reset form after 5 seconds
-                setTimeout(function() {
-                    contactForm.reset();
-                    contactForm.style.display = 'flex';
-                    formSuccess.style.display = 'none';
-                    submitButton.innerHTML = originalButtonText;
-                    submitButton.disabled = false;
-                }, 5000);
+                    // Scroll to success message
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-                // In production, you would send data to your backend:
-                /*
-                fetch('/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        contactForm.style.display = 'none';
-                        formSuccess.style.display = 'block';
-                        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Une erreur s\'est produite. Veuillez réessayer.');
+                    // Reset form after 5 seconds
+                    setTimeout(function() {
+                        contactForm.reset();
+                        contactForm.style.display = 'flex';
+                        formSuccess.style.display = 'none';
+                        submitButton.innerHTML = originalButtonText;
+                        submitButton.disabled = false;
+                    }, 5000);
+                }, function(error) {
+                    console.error('FAILED...', error);
+                    showError('Une erreur s\'est produite lors de l\'envoi. Veuillez réessayer ou nous contacter directement par WhatsApp.');
                     submitButton.innerHTML = originalButtonText;
                     submitButton.disabled = false;
                 });
-                */
-            }, 1500);
         });
     }
 
     // Form validation
     function validateForm(data) {
         // Check required fields
-        if (!data.firstName || !data.lastName || !data.email || !data.projectType || !data.message) {
+        if (!data.firstName || !data.lastName || !data.email || !data.phone || !data.projectType || !data.localisation || !data.message) {
             showError('Veuillez remplir tous les champs obligatoires.');
             return false;
         }
@@ -87,6 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
             showError('Veuillez entrer une adresse email valide.');
+            return false;
+        }
+
+        // Validate phone (basic check)
+        if (data.phone.length < 10) {
+            showError('Veuillez entrer un numéro de téléphone valide.');
             return false;
         }
 
