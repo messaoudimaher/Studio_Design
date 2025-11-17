@@ -100,6 +100,11 @@
   height: 100%;
 }
 
+.feature-card ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
 .feature-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 40px var(--color-shadow-md);
