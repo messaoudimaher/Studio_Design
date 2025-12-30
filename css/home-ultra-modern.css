@@ -719,6 +719,21 @@
   color: var(--color-white);
   border-radius: var(--radius-md);
   font-size: 20px;
+  position: relative;
+}
+
+.feature-icon i {
+  display: none;
+}
+
+/* CSS-based checkmark - more reliable than icon fonts */
+.feature-icon::before {
+  content: '✓';
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--color-white);
+  line-height: 1;
 }
 
 .feature-text h4 {
