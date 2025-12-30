@@ -143,14 +143,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Phone number formatting (Algerian format)
+    // Phone number formatting (Tunisien format)
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
         phoneInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             
-            // Format as: +213 XXX XXX XXX
-            if (value.startsWith('213')) {
+            // Format as: +216 XXX XXX XXX
+            if (value.startsWith('216')) {
                 value = value.substring(3);
             } else if (value.startsWith('0')) {
                 value = value.substring(1);
@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (value.length > 0) {
                 if (value.length <= 3) {
-                    e.target.value = '+213 ' + value;
+                    e.target.value = '+216 ' + value;
                 } else if (value.length <= 6) {
-                    e.target.value = '+213 ' + value.substring(0, 3) + ' ' + value.substring(3);
+                    e.target.value = '+216 ' + value.substring(0, 3) + ' ' + value.substring(3);
                 } else {
-                    e.target.value = '+213 ' + value.substring(0, 3) + ' ' + value.substring(3, 6) + ' ' + value.substring(6, 9);
+                    e.target.value = '+216 ' + value.substring(0, 3) + ' ' + value.substring(3, 6) + ' ' + value.substring(6, 9);
                 }
             }
         });
