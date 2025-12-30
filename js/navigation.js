@@ -131,6 +131,7 @@
     nav.classList.add('active');
     overlay.classList.add('active');
     body.classList.add('menu-open');
+    header.classList.add('menu-is-open');
     
     // Set aria-expanded for accessibility
     menuToggle.setAttribute('aria-expanded', 'true');
@@ -145,6 +146,7 @@
     nav.classList.remove('active');
     overlay.classList.remove('active');
     body.classList.remove('menu-open');
+    header.classList.remove('menu-is-open');
     
     // Set aria-expanded for accessibility
     menuToggle.setAttribute('aria-expanded', 'false');

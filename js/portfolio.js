@@ -37,6 +37,9 @@
     
     // Add intersection observer for animations
     setupScrollAnimations();
+    
+    // Initialize carousels
+    initializeCarousels();
   }
 
   // === FILTER FUNCTIONALITY ===
@@ -105,64 +108,228 @@
     countElement.textContent = visibleItems.length;
   }
 
-  // === LIGHTBOX FUNCTIONALITY ===
+  // === PROJECT GALLERY FUNCTIONALITY ===
   function setupLightbox() {
-    const lightbox = document.querySelector('.portfolio-lightbox');
-    if (!lightbox) return;
-
-    const lightboxImage = lightbox.querySelector('.portfolio-lightbox__image');
-    const closeBtn = lightbox.querySelector('.portfolio-lightbox__close');
-    
-    // Click on portfolio item to open lightbox
-    portfolioItems.forEach(item => {
-      item.addEventListener('click', function(e) {
-        // Don't open if clicking on a link
-        if (e.target.tagName === 'A' || e.target.closest('a')) return;
-        
-        const imageSrc = this.querySelector('.portfolio-item__image')?.src;
-        if (imageSrc) {
-          openLightbox(imageSrc);
-        }
-      });
-    });
-    
-    // Close lightbox
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeLightbox);
+    const modal = document.querySelector('.project-gallery-modal');
+    if (!modal) {
+      console.error('Project gallery modal not found!');
+      return;
     }
+
+    const closeBtn = modal.querySelector('.gallery-modal__close');
+    const overlay = modal.querySelector('.gallery-modal__overlay');
     
-    // Close on background click
-    lightbox.addEventListener('click', function(e) {
-      if (e.target === lightbox) {
-        closeLightbox();
+    console.log('Setting up gallery for', portfolioItems.length, 'items');
+    
+    // Click on portfolio item to open gallery
+    portfolioItems.forEach((item, index) => {
+      // Only add click listener to gallery items
+      if (item.classList.contains('portfolio-item--gallery')) {
+        console.log('Adding click handler to gallery item', index);
+        
+        item.addEventListener('click', function(e) {
+          console.log('Gallery item clicked!', this.dataset.projectTitle);
+          
+          // Don't open if clicking on a link
+          if (e.target.tagName === 'A' || e.target.closest('a')) return;
+          
+          const title = this.dataset.projectTitle;
+          const category = this.dataset.projectCategory;
+          
+          try {
+            const images = JSON.parse(this.dataset.projectImages);
+            console.log('Opening gallery with', images.length, 'images');
+            
+            if (images && images.length > 0) {
+              openGallery(title, category, images);
+            }
+          } catch (error) {
+            console.error('Error parsing images data:', error);
+          }
+        });
       }
     });
+    
+    // Close gallery
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeGallery);
+    }
+    
+    // Close on overlay click
+    if (overlay) {
+      overlay.addEventListener('click', closeGallery);
+    }
     
     // Close on ESC key
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-        closeLightbox();
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeGallery();
       }
     });
   }
 
-  function openLightbox(imageSrc) {
-    const lightbox = document.querySelector('.portfolio-lightbox');
-    const lightboxImage = lightbox.querySelector('.portfolio-lightbox__image');
+  // Global variable to track current slide
+  let currentSlideIndex = 0;
+  let totalSlides = 0;
+  let galleryImages = [];
+
+  function openGallery(title, category, images) {
+    const modal = document.querySelector('.project-gallery-modal');
+    const titleElement = modal.querySelector('.gallery-modal__title');
+    const categoryElement = modal.querySelector('.gallery-modal__category');
+    const carousel = modal.querySelector('.gallery-carousel');
+    const totalSlidesElement = modal.querySelector('.total-slides');
+    const currentSlideElement = modal.querySelector('.current-slide');
     
-    if (lightbox && lightboxImage) {
-      lightboxImage.src = imageSrc;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
+    if (!modal || !carousel) return;
+    
+    console.log('=== Opening Gallery ===');
+    console.log('Title:', title);
+    console.log('Images array:', images);
+    console.log('Number of images:', images.length);
+    
+    // Store images and reset index
+    galleryImages = images;
+    currentSlideIndex = 0;
+    totalSlides = images.length;
+    
+    // Set title and category
+    titleElement.textContent = title;
+    categoryElement.textContent = category;
+    totalSlidesElement.textContent = images.length;
+    currentSlideElement.textContent = '1';
+    
+    // Clear carousel
+    carousel.innerHTML = '';
+    carousel.className = 'gallery-carousel';
+    
+    // Add all images but hide all except first
+    images.forEach((imageSrc, index) => {
+      console.log('Creating slide', index, 'with image:', imageSrc);
+      const slideDiv = document.createElement('div');
+      slideDiv.className = 'gallery-slide';
+      slideDiv.style.display = index === 0 ? 'flex' : 'none';
+      slideDiv.dataset.slideIndex = index;
+      
+      const img = document.createElement('img');
+      img.src = imageSrc;
+      img.alt = title;
+      
+      slideDiv.appendChild(img);
+      carousel.appendChild(slideDiv);
+    });
+    
+    console.log('Gallery created with', images.length, 'slides');
+    console.log('Total slides in carousel:', carousel.querySelectorAll('.gallery-slide').length);
+    
+    // Create navigation buttons
+    let owlNav = carousel.querySelector('.owl-nav');
+    if (!owlNav) {
+      owlNav = document.createElement('div');
+      owlNav.className = 'owl-nav';
+      
+      // Create previous button
+      const prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'owl-prev';
+      prevBtn.innerHTML = '<span>‹</span>';
+      prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigatePrev();
+      });
+      
+      // Create next button
+      const nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'owl-next';
+      nextBtn.innerHTML = '<span>›</span>';
+      nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateNext();
+      });
+      
+      owlNav.appendChild(prevBtn);
+      owlNav.appendChild(nextBtn);
+      carousel.appendChild(owlNav);
     }
+    
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    console.log('Gallery opened successfully with custom navigation');
+  }
+  
+  function navigatePrev() {
+    console.log('Navigate to previous image');
+    currentSlideIndex--;
+    if (currentSlideIndex < 0) {
+      currentSlideIndex = totalSlides - 1; // Loop to last
+    }
+    updateGalleryDisplay();
+  }
+  
+  function navigateNext() {
+    console.log('Navigate to next image');
+    currentSlideIndex++;
+    if (currentSlideIndex >= totalSlides) {
+      currentSlideIndex = 0; // Loop to first
+    }
+    updateGalleryDisplay();
+  }
+  
+  function updateGalleryDisplay() {
+    const modal = document.querySelector('.project-gallery-modal');
+    const carousel = modal.querySelector('.gallery-carousel');
+    const currentSlideElement = modal.querySelector('.current-slide');
+    const slides = carousel.querySelectorAll('.gallery-slide');
+    
+    console.log('=== Updating Gallery Display ===');
+    console.log('Current slide index:', currentSlideIndex);
+    console.log('Total slides:', totalSlides);
+    console.log('Slides found in DOM:', slides.length);
+    console.log('Showing slide', currentSlideIndex + 1, 'of', totalSlides);
+    
+    // Hide all slides
+    slides.forEach((slide, index) => {
+      console.log('Slide', index, 'display:', index === currentSlideIndex ? 'flex' : 'none');
+      if (index === currentSlideIndex) {
+        slide.style.display = 'flex';
+        slide.style.opacity = '0';
+        // Fade in
+        setTimeout(() => {
+          slide.style.transition = 'opacity 0.3s ease';
+          slide.style.opacity = '1';
+        }, 10);
+      } else {
+        slide.style.display = 'none';
+      }
+    });
+    
+    // Update counter
+    currentSlideElement.textContent = currentSlideIndex + 1;
+    console.log('Counter updated to:', currentSlideIndex + 1);
   }
 
-  function closeLightbox() {
-    const lightbox = document.querySelector('.portfolio-lightbox');
+  function closeGallery() {
+    const modal = document.querySelector('.project-gallery-modal');
+    const carousel = modal.querySelector('.gallery-carousel');
     
-    if (lightbox) {
-      lightbox.classList.remove('active');
+    if (modal) {
+      modal.classList.remove('active');
       document.body.style.overflow = '';
+      
+      // Clear carousel
+      if (carousel) {
+        carousel.innerHTML = '';
+      }
+      
+      // Reset state
+      currentSlideIndex = 0;
+      totalSlides = 0;
+      galleryImages = [];
     }
   }
 
@@ -267,20 +434,40 @@
     });
   }
 
+  // === CAROUSEL INITIALIZATION ===
+  function initializeCarousels() {
+    // No longer needed - carousels are initialized when gallery opens
+    console.log('Carousels will be initialized on gallery open');
+  }
+
   // === PUBLIC API ===
   window.PortfolioFilter = {
     filter: filterItems,
     updateCount: updatePortfolioCount,
-    openLightbox: openLightbox,
-    closeLightbox: closeLightbox,
+    openGallery: openGallery,
+    closeGallery: closeGallery,
   };
 
   // === INITIALIZE ON DOM READY ===
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing portfolio');
+      init();
+    });
   } else {
+    console.log('DOM already loaded, initializing portfolio immediately');
     init();
   }
+  
+  // Also try on window load as a fallback
+  window.addEventListener('load', function() {
+    console.log('Window fully loaded');
+    // Re-initialize if needed
+    if (portfolioItems.length === 0) {
+      console.log('Reinitializing portfolio');
+      init();
+    }
+  });
 
 })();
 
