@@ -22,7 +22,6 @@
     portfolioItems = Array.from(document.querySelectorAll('.portfolio-item'));
     
     if (portfolioItems.length === 0) {
-      console.log('No portfolio items found');
       return;
     }
 
@@ -112,24 +111,17 @@
   function setupLightbox() {
     const modal = document.querySelector('.project-gallery-modal');
     if (!modal) {
-      console.error('Project gallery modal not found!');
       return;
     }
 
     const closeBtn = modal.querySelector('.gallery-modal__close');
     const overlay = modal.querySelector('.gallery-modal__overlay');
     
-    console.log('Setting up gallery for', portfolioItems.length, 'items');
-    
     // Click on portfolio item to open gallery
     portfolioItems.forEach((item, index) => {
       // Only add click listener to gallery items
       if (item.classList.contains('portfolio-item--gallery')) {
-        console.log('Adding click handler to gallery item', index);
-        
         item.addEventListener('click', function(e) {
-          console.log('Gallery item clicked!', this.dataset.projectTitle);
-          
           // Don't open if clicking on a link
           if (e.target.tagName === 'A' || e.target.closest('a')) return;
           
@@ -138,13 +130,12 @@
           
           try {
             const images = JSON.parse(this.dataset.projectImages);
-            console.log('Opening gallery with', images.length, 'images');
             
             if (images && images.length > 0) {
               openGallery(title, category, images);
             }
           } catch (error) {
-            console.error('Error parsing images data:', error);
+            // Silent error handling
           }
         });
       }
@@ -183,11 +174,6 @@
     
     if (!modal || !carousel) return;
     
-    console.log('=== Opening Gallery ===');
-    console.log('Title:', title);
-    console.log('Images array:', images);
-    console.log('Number of images:', images.length);
-    
     // Store images and reset index
     galleryImages = images;
     currentSlideIndex = 0;
@@ -205,7 +191,6 @@
     
     // Add all images but hide all except first
     images.forEach((imageSrc, index) => {
-      console.log('Creating slide', index, 'with image:', imageSrc);
       const slideDiv = document.createElement('div');
       slideDiv.className = 'gallery-slide';
       slideDiv.style.display = index === 0 ? 'flex' : 'none';
@@ -218,9 +203,6 @@
       slideDiv.appendChild(img);
       carousel.appendChild(slideDiv);
     });
-    
-    console.log('Gallery created with', images.length, 'slides');
-    console.log('Total slides in carousel:', carousel.querySelectorAll('.gallery-slide').length);
     
     // Create navigation buttons
     let owlNav = carousel.querySelector('.owl-nav');
@@ -258,12 +240,9 @@
     // Show modal
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    console.log('Gallery opened successfully with custom navigation');
   }
   
   function navigatePrev() {
-    console.log('Navigate to previous image');
     currentSlideIndex--;
     if (currentSlideIndex < 0) {
       currentSlideIndex = totalSlides - 1; // Loop to last
@@ -272,7 +251,6 @@
   }
   
   function navigateNext() {
-    console.log('Navigate to next image');
     currentSlideIndex++;
     if (currentSlideIndex >= totalSlides) {
       currentSlideIndex = 0; // Loop to first
@@ -286,15 +264,8 @@
     const currentSlideElement = modal.querySelector('.current-slide');
     const slides = carousel.querySelectorAll('.gallery-slide');
     
-    console.log('=== Updating Gallery Display ===');
-    console.log('Current slide index:', currentSlideIndex);
-    console.log('Total slides:', totalSlides);
-    console.log('Slides found in DOM:', slides.length);
-    console.log('Showing slide', currentSlideIndex + 1, 'of', totalSlides);
-    
     // Hide all slides
     slides.forEach((slide, index) => {
-      console.log('Slide', index, 'display:', index === currentSlideIndex ? 'flex' : 'none');
       if (index === currentSlideIndex) {
         slide.style.display = 'flex';
         slide.style.opacity = '0';
@@ -310,7 +281,6 @@
     
     // Update counter
     currentSlideElement.textContent = currentSlideIndex + 1;
-    console.log('Counter updated to:', currentSlideIndex + 1);
   }
 
   function closeGallery() {
@@ -437,7 +407,6 @@
   // === CAROUSEL INITIALIZATION ===
   function initializeCarousels() {
     // No longer needed - carousels are initialized when gallery opens
-    console.log('Carousels will be initialized on gallery open');
   }
 
   // === PUBLIC API ===
@@ -450,21 +419,15 @@
 
   // === INITIALIZE ON DOM READY ===
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM loaded, initializing portfolio');
-      init();
-    });
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    console.log('DOM already loaded, initializing portfolio immediately');
     init();
   }
   
   // Also try on window load as a fallback
   window.addEventListener('load', function() {
-    console.log('Window fully loaded');
     // Re-initialize if needed
     if (portfolioItems.length === 0) {
-      console.log('Reinitializing portfolio');
       init();
     }
   });
